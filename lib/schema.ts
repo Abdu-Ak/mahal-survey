@@ -21,9 +21,11 @@ export const memberSchema = z.object({
 export const registrationSchema = z.object({
   headName: z.string().trim().min(1, required).max(120),
   houseName: z.string().trim().min(1, required).max(120),
+  address: z.string().trim().min(1, required).max(500),
   headAge: z.coerce.number().int().min(10, 'വയസ്സ് 10 മുതൽ 120 വരെ നൽകുക').max(120, 'വയസ്സ് 10 മുതൽ 120 വരെ നൽകുക'),
   phone,
   houseType: z.enum(['sheet', 'ode', 'warp'], { message: required }),
+  hasWidow: z.enum(['yes', 'no'], { message: required }),
   hasChronicIllness: z.enum(['yes', 'no'], { message: required }),
   chronicDetails: z.string().trim().max(1000),
   receivesAid: z.enum(['yes', 'no'], { message: required }),

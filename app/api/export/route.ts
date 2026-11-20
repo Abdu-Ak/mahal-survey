@@ -51,8 +51,8 @@ export async function GET(request: Request) {
     workbook.creator = config.committeeName;
     workbook.created = new Date();
     const families = workbook.addWorksheet('കുടുംബങ്ങൾ');
-    families.addRow(['നമ്പർ', 'തീയതി', 'കുടുംബനാഥന്റെ പേര്', 'വീട്ടുപേര്', 'വയസ്സ്', 'ഫോൺ', 'വീടിന്റെ സ്ഥിതി', 'നിത്യരോഗികൾ', 'രോഗ വിവരം', 'സഹായം', 'സഹായ വിവരം', 'ഫോട്ടോ ലിങ്ക്', 'അംഗങ്ങളുടെ എണ്ണം']);
-    for (const row of households) families.addRow([row.serial_no, new Date(row.submitted_at), row.head_name, row.house_name, row.head_age, row.phone, houseTypeLabels[row.house_type], row.has_chronic_illness ? 'ഉണ്ട്' : 'ഇല്ല', row.chronic_details ?? '', row.receives_aid ? 'ഉണ്ട്' : 'ഇല്ല', row.aid_details ?? '', publicPhotoUrl(row.photo_path), memberMap.get(row.id)?.length ?? 0]);
+    families.addRow(['നമ്പർ', 'തീയതി', 'കുടുംബനാഥന്റെ പേര്', 'വീട്ടുപേര്', 'വിലാസം', 'വീട്ടിൽ വിധവ', 'വയസ്സ്', 'ഫോൺ', 'വീടിന്റെ സ്ഥിതി', 'നിത്യരോഗികൾ', 'രോഗ വിവരം', 'സഹായം', 'സഹായ വിവരം', 'ഫോട്ടോ ലിങ്ക്', 'അംഗങ്ങളുടെ എണ്ണം']);
+    for (const row of households) families.addRow([row.serial_no, new Date(row.submitted_at), row.head_name, row.house_name, row.address, row.has_widow ? 'ഉണ്ട്' : 'ഇല്ല', row.head_age, row.phone, houseTypeLabels[row.house_type], row.has_chronic_illness ? 'ഉണ്ട്' : 'ഇല്ല', row.chronic_details ?? '', row.receives_aid ? 'ഉണ്ട്' : 'ഇല്ല', row.aid_details ?? '', publicPhotoUrl(row.photo_path), memberMap.get(row.id)?.length ?? 0]);
     families.getColumn(2).numFmt = 'dd-mm-yyyy hh:mm';
     styleSheet(families);
     const memberSheet = workbook.addWorksheet('അംഗങ്ങൾ');

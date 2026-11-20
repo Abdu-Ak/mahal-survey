@@ -6,9 +6,11 @@ create table if not exists public.households (
   submitted_at timestamptz not null default now(),
   head_name text not null check (char_length(head_name) between 1 and 120),
   house_name text not null check (char_length(house_name) between 1 and 120),
+  address text not null check (char_length(address) between 1 and 500),
   head_age int not null check (head_age between 10 and 120),
   phone text not null check (phone ~ '^[6-9][0-9]{9}$'),
   house_type text not null check (house_type in ('sheet','ode','warp')),
+  has_widow boolean not null,
   has_chronic_illness boolean not null,
   chronic_details text,
   receives_aid boolean not null,
@@ -48,9 +50,9 @@ language plpgsql security definer set search_path = public
 as $$
 declare new_id uuid; new_serial bigint;
 begin
-  insert into households (head_name, house_name, head_age, phone, house_type, has_chronic_illness, chronic_details, receives_aid, aid_details, photo_path)
-  values (p_household->>'head_name', p_household->>'house_name', (p_household->>'head_age')::int, p_household->>'phone',
-    p_household->>'house_type', (p_household->>'has_chronic_illness')::boolean, p_household->>'chronic_details',
+  insert into households (head_name, house_name, address, head_age, phone, house_type, has_widow, has_chronic_illness, chronic_details, receives_aid, aid_details, photo_path)
+  values (p_household->>'head_name', p_household->>'house_name', p_household->>'address', (p_household->>'head_age')::int, p_household->>'phone',
+    p_household->>'house_type', (p_household->>'has_widow')::boolean, (p_household->>'has_chronic_illness')::boolean, p_household->>'chronic_details',
     (p_household->>'receives_aid')::boolean, p_household->>'aid_details', p_household->>'photo_path')
   returning households.id, households.serial_no into new_id, new_serial;
   insert into members (household_id, sl_no, name, age, relation, education, technical_qualification, occupation, blood_group, phone)
@@ -64,8 +66,8 @@ returns void language plpgsql security definer set search_path = public
 as $$
 begin
   update households set
-    head_name = p_household->>'head_name', house_name = p_household->>'house_name', head_age = (p_household->>'head_age')::int,
-    phone = p_household->>'phone', house_type = p_household->>'house_type', has_chronic_illness = (p_household->>'has_chronic_illness')::boolean,
+    head_name = p_household->>'head_name', house_name = p_household->>'house_name', address = p_household->>'address', head_age = (p_household->>'head_age')::int,
+    phone = p_household->>'phone', house_type = p_household->>'house_type', has_widow = (p_household->>'has_widow')::boolean, has_chronic_illness = (p_household->>'has_chronic_illness')::boolean,
     chronic_details = p_household->>'chronic_details', receives_aid = (p_household->>'receives_aid')::boolean,
     aid_details = p_household->>'aid_details', photo_path = coalesce(p_household->>'photo_path', photo_path), updated_at = now()
   where id = p_id;

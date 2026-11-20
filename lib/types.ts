@@ -18,9 +18,11 @@ export type Household = {
   submitted_at: string;
   head_name: string;
   house_name: string;
+  address: string;
   head_age: number;
   phone: string;
   house_type: 'sheet' | 'ode' | 'warp';
+  has_widow: boolean;
   has_chronic_illness: boolean;
   chronic_details: string | null;
   receives_aid: boolean;

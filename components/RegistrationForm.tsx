@@ -27,7 +27,8 @@ const emptyMember = {
 };
 
 const defaults: RegistrationInput = {
-  headName: '', houseName: '', headAge: '' as unknown as number, phone: '', houseType: undefined as never,
+  headName: '', houseName: '', address: '', headAge: '' as unknown as number, phone: '', houseType: undefined as never,
+  hasWidow: undefined as never,
   hasChronicIllness: undefined as never, chronicDetails: '', receivesAid: undefined as never,
   aidDetails: '', members: [], website: '',
 };
@@ -146,6 +147,11 @@ export function RegistrationForm({
             <input id="houseName" {...form.register('houseName')} aria-invalid={!!form.formState.errors.houseName} />
             {inputError(form.formState.errors.houseName?.message)}
           </div>
+          <div className="md:col-span-2">
+            <label className="field-label" htmlFor="address">{labels.address} *</label>
+            <textarea id="address" autoComplete="street-address" {...form.register('address')} aria-invalid={!!form.formState.errors.address} />
+            {inputError(form.formState.errors.address?.message)}
+          </div>
           <div>
             <label className="field-label" htmlFor="headAge">{labels.age} *</label>
             <input id="headAge" type="number" inputMode="numeric" min={10} max={120} {...form.register('headAge')} />
@@ -167,6 +173,13 @@ export function RegistrationForm({
             ))}
           </div>
           {inputError(form.formState.errors.houseType?.message)}
+        </fieldset>
+        <fieldset>
+          <legend className="field-label">{labels.widow} *</legend>
+          <div className="flex gap-6">
+            {(['yes', 'no'] as const).map((value) => <label key={value} className="flex min-h-11 items-center gap-2"><input type="radio" value={value} {...form.register('hasWidow')} />{value === 'yes' ? labels.yes : labels.no}</label>)}
+          </div>
+          {inputError(form.formState.errors.hasWidow?.message)}
         </fieldset>
         <fieldset>
           <legend className="field-label">{labels.illness} *</legend>

@@ -6,6 +6,8 @@ export const labels = {
   date: 'തീയതി',
   headName: 'കുടുംബനാഥന്റെ പേര്',
   houseName: 'വീട്ടുപേര്',
+  address: 'വിലാസം',
+  widow: 'വീട്ടിൽ വിധവയുണ്ടോ?',
   age: 'വയസ്സ്',
   phone: 'ഫോൺ നമ്പർ',
   houseType: 'വീടിന്റെ നിലവിലെ സ്ഥിതി',

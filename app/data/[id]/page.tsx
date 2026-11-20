@@ -19,6 +19,7 @@ export default async function HouseholdDetailPage({ params }: { params: Promise<
   const yesNo = (value: boolean) => value ? 'ഉണ്ട്' : 'ഇല്ല';
   const details = [
     ['രജിസ്ട്രേഷൻ നമ്പർ', household.serial_no], ['കുടുംബനാഥന്റെ പേര്', household.head_name], ['വീട്ടുപേര്', household.house_name],
+    ['വിലാസം', household.address || '—'], ['വീട്ടിൽ വിധവയുണ്ടോ?', yesNo(household.has_widow)],
     ['വയസ്സ്', household.head_age], ['ഫോൺ നമ്പർ', household.phone], ['വീടിന്റെ നിലവിലെ സ്ഥിതി', houseTypeLabels[household.house_type]],
     ['നിത്യരോഗികളുണ്ടോ?', yesNo(household.has_chronic_illness)], ['രോഗ വിവരം', household.chronic_details || '—'],
     ['സഹായം ലഭിക്കുന്നുണ്ടോ?', yesNo(household.receives_aid)], ['സഹായ വിവരം', household.aid_details || '—'],

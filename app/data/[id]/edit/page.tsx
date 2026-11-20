@@ -14,9 +14,11 @@ export default async function EditPage({ params }: { params: Promise<{ id: strin
   const initialValues = {
     headName: household.head_name,
     houseName: household.house_name,
+    address: household.address ?? '',
     headAge: household.head_age,
     phone: household.phone,
     houseType: household.house_type,
+    hasWidow: household.has_widow ? 'yes' as const : 'no' as const,
     hasChronicIllness: household.has_chronic_illness ? 'yes' as const : 'no' as const,
     chronicDetails: household.chronic_details ?? '',
     receivesAid: household.receives_aid ? 'yes' as const : 'no' as const,

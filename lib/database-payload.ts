@@ -4,9 +4,11 @@ export function householdPayload(value: RegistrationData, photoPath?: string) {
   return {
     head_name: value.headName,
     house_name: value.houseName,
+    address: value.address,
     head_age: value.headAge,
     phone: value.phone,
     house_type: value.houseType,
+    has_widow: value.hasWidow === 'yes',
     has_chronic_illness: value.hasChronicIllness === 'yes',
     chronic_details: value.hasChronicIllness === 'yes' ? value.chronicDetails : null,
     receives_aid: value.receivesAid === 'yes',
