@@ -17,7 +17,7 @@ export async function POST(request: Request) {
     if (typeof raw !== 'string') return NextResponse.json({ error: 'സമർപ്പിച്ച വിവരങ്ങൾ ശരിയല്ല' }, { status: 400 });
     const parsedJson: unknown = JSON.parse(raw);
     if (parsedJson && typeof parsedJson === 'object' && 'website' in parsedJson && parsedJson.website) {
-      return NextResponse.json({ ok: true, serialNo: '' });
+      return NextResponse.json({ error: 'സമർപ്പിച്ച വിവരങ്ങൾ ശരിയല്ല. പേജ് പുതുക്കി വീണ്ടും ശ്രമിക്കുക.' }, { status: 400 });
     }
     const result = registrationSchema.safeParse(parsedJson);
     if (!result.success) return NextResponse.json({ error: result.error.issues[0]?.message ?? 'സമർപ്പിച്ച വിവരങ്ങൾ ശരിയല്ല' }, { status: 400 });

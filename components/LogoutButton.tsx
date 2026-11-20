@@ -1,12 +1,13 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { LogOut } from 'lucide-react';
 
 export function LogoutButton() {
   const router = useRouter();
-  return <button className="secondary-button min-h-10 px-3 py-1 text-sm" onClick={async () => {
+  return <button className="secondary-button icon-button" aria-label="പുറത്തുകടക്കുക" title="പുറത്തുകടക്കുക" onClick={async () => {
     await fetch('/api/admin/logout', { method: 'POST' });
     router.replace('/admin-login');
     router.refresh();
-  }}>പുറത്തുകടക്കുക</button>;
+  }}><LogOut aria-hidden="true" size={19} strokeWidth={2} /></button>;
 }

@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { SiteHeader } from '@/components/SiteHeader';
 
 export default async function ThanksPage({ searchParams }: { searchParams: Promise<{ no?: string }> }) {
   const { no } = await searchParams;
+  if (!no) redirect('/');
   return (
     <>
       <SiteHeader />

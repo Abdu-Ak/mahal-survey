@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
+import { ArrowLeft, Pencil } from 'lucide-react';
 import { DeleteButton } from '@/components/DeleteButton';
 import { PrintButton } from '@/components/PrintButton';
 import { houseTypeLabels } from '@/lib/config';
@@ -23,7 +24,7 @@ export default async function HouseholdDetailPage({ params }: { params: Promise<
     ['സഹായം ലഭിക്കുന്നുണ്ടോ?', yesNo(household.receives_aid)], ['സഹായ വിവരം', household.aid_details || '—'],
   ];
   return <main className="page-shell py-7 md:py-10">
-    <div className="no-print mb-5 flex flex-wrap items-center justify-between gap-3"><Link className="secondary-button" href="/data">തിരികെ</Link><div className="flex flex-wrap gap-2"><PrintButton /><Link className="primary-button" href={`/data/${id}/edit`}>തിരുത്തുക</Link><DeleteButton id={id} /></div></div>
+    <div className="no-print mb-5 flex flex-wrap items-center justify-between gap-3"><Link className="secondary-button icon-button" href="/data" aria-label="തിരികെ" title="തിരികെ"><ArrowLeft aria-hidden="true" size={19} /></Link><div className="flex flex-wrap gap-2"><PrintButton /><Link className="secondary-button icon-button" href={`/data/${id}/edit`} aria-label="തിരുത്തുക" title="തിരുത്തുക"><Pencil aria-hidden="true" size={19} /></Link><DeleteButton id={id} /></div></div>
     <article className="space-y-5">
       <section className="section-card grid gap-6 md:grid-cols-[18rem_1fr]">
         <img src={publicPhotoUrl(household.photo_path)} alt={`${household.head_name} ഫോട്ടോ`} className="aspect-[4/3] w-full rounded-xl bg-slate-100 object-cover md:aspect-[3/4]" />

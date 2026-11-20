@@ -6,11 +6,11 @@ export default function RegistrationPage() {
   return (
     <>
       <SiteHeader />
-      <main className="form-shell py-7 md:py-10">
-        <div className="mb-6 text-center">
-          <p className="mb-2 inline-flex rounded-full bg-emerald-100 px-3 py-1 text-sm font-medium text-emerald-900">കുടുംബ വിവരശേഖരണം</p>
-          <h1 className="text-2xl font-bold text-emerald-950 md:text-3xl">{labels.appTitle}</h1>
-          <p className="mt-2 text-slate-600">നക്ഷത്ര ചിഹ്നമുള്ള വിവരങ്ങൾ നിർബന്ധമാണ്.</p>
+      <main className="form-shell registration-main">
+        <div className="registration-intro text-center">
+          <p className="registration-badge mb-2 inline-flex rounded-full bg-emerald-100 px-3 py-1 font-medium text-emerald-900">കുടുംബ വിവരശേഖരണം</p>
+          <h1 className="registration-title font-bold text-emerald-950">{labels.appTitle}</h1>
+          <p className="registration-subtitle mt-2 text-slate-600">നക്ഷത്ര ചിഹ്നമുള്ള വിവരങ്ങൾ നിർബന്ധമാണ്.</p>
         </div>
         <RegistrationForm />
       </main>

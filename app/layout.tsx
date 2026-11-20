@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import '@fontsource/noto-sans-malayalam/400.css';
 import '@fontsource/noto-sans-malayalam/500.css';
 import '@fontsource/noto-sans-malayalam/700.css';
+import 'react-day-picker/style.css';
 import './globals.css';
 
 export const metadata: Metadata = {

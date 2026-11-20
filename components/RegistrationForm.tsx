@@ -2,13 +2,15 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import imageCompression from 'browser-image-compression';
+import { Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
-import { useFieldArray, useForm, useWatch } from 'react-hook-form';
+import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { bloodGroups, houseTypeLabels, relationSuggestions } from '@/lib/config';
 import { labels } from '@/lib/labels';
 import { registrationSchema, type RegistrationInput } from '@/lib/schema';
 import { Spinner } from './Spinner';
+import { CompactSelect } from './CompactSelect';
 
 type Props = {
   mode?: 'create' | 'edit';
@@ -216,7 +218,15 @@ export function RegistrationForm({
           <div key={field.id} className="rounded-xl border border-slate-200 bg-slate-50/70 p-4">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="font-bold text-emerald-900">അംഗം {index + 1}</h3>
-              <button type="button" className="danger-button min-h-10 px-3 py-1 text-sm" onClick={() => remove(index)}>{labels.remove}</button>
+              <button
+                type="button"
+                className="danger-button icon-button"
+                aria-label={labels.remove}
+                title={labels.remove}
+                onClick={() => remove(index)}
+              >
+                <Trash2 aria-hidden="true" size={20} strokeWidth={2} />
+              </button>
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div><label className="field-label" htmlFor={`member-${index}-name`}>{labels.name} *</label><input id={`member-${index}-name`} {...form.register(`members.${index}.name`)} />{inputError(form.formState.errors.members?.[index]?.name?.message)}</div>
@@ -225,7 +235,26 @@ export function RegistrationForm({
               <div><label className="field-label">{labels.education}</label><input {...form.register(`members.${index}.education`)} /></div>
               <div><label className="field-label">{labels.technical}</label><input {...form.register(`members.${index}.technicalQualification`)} /></div>
               <div><label className="field-label">{labels.occupation}</label><input {...form.register(`members.${index}.occupation`)} /></div>
-              <div><label className="field-label">{labels.bloodGroup}</label><select {...form.register(`members.${index}.bloodGroup`)}><option value="">തിരഞ്ഞെടുക്കുക</option>{bloodGroups.map((group) => <option key={group}>{group}</option>)}</select></div>
+              <div>
+                <label className="field-label" htmlFor={`member-${index}-blood`}>{labels.bloodGroup}</label>
+                <Controller
+                  control={form.control}
+                  name={`members.${index}.bloodGroup`}
+                  render={({ field }) => (
+                    <CompactSelect
+                      id={`member-${index}-blood`}
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                      placeholder="തിരഞ്ഞെടുക്കുക"
+                      options={[
+                        { value: '', label: 'തിരഞ്ഞെടുക്കുക' },
+                        ...bloodGroups.map((group) => ({ value: group, label: group })),
+                      ]}
+                    />
+                  )}
+                />
+              </div>
               <div><label className="field-label">{labels.phone}</label><input type="tel" inputMode="numeric" maxLength={10} {...form.register(`members.${index}.phone`)} />{inputError(form.formState.errors.members?.[index]?.phone?.message)}</div>
             </div>
           </div>
@@ -233,7 +262,6 @@ export function RegistrationForm({
         <datalist id="relations">{relationSuggestions.map((relation) => <option key={relation} value={relation} />)}</datalist>
       </section>
 
-      <div className="absolute -left-[10000px]" aria-hidden><label>Website<input tabIndex={-1} autoComplete="off" {...form.register('website')} /></label></div>
       {serverError && <p className="rounded-xl border border-red-200 bg-red-50 p-4 text-red-800" role="alert">{serverError}</p>}
       <button className="primary-button w-full text-lg" type="submit" disabled={form.formState.isSubmitting || compressing}>
         {form.formState.isSubmitting && <Spinner />}{form.formState.isSubmitting ? labels.loading : mode === 'edit' ? labels.save : labels.submit}

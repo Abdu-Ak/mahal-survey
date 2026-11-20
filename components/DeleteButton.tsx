@@ -2,12 +2,12 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Spinner } from './Spinner';
+import { LoaderCircle, Trash2 } from 'lucide-react';
 
 export function DeleteButton({ id, compact = false }: { id: string; compact?: boolean }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  return <button type="button" className={`danger-button ${compact ? 'min-h-9 px-2 py-1 text-xs' : ''}`} disabled={loading} onClick={async (event) => {
+  return <button type="button" className={`danger-button icon-button ${compact ? 'table-action-button' : ''}`} aria-label="ഇല്ലാതാക്കുക" title="ഇല്ലാതാക്കുക" disabled={loading} onClick={async (event) => {
     event.preventDefault();
     event.stopPropagation();
     if (!window.confirm('ഈ കുടുംബത്തിന്റെ വിവരങ്ങൾ ശാശ്വതമായി ഇല്ലാതാക്കണോ? ഇത് തിരികെ എടുക്കാൻ കഴിയില്ല.')) return;
@@ -20,5 +20,5 @@ export function DeleteButton({ id, compact = false }: { id: string; compact?: bo
     }
     router.push('/data?deleted=1');
     router.refresh();
-  }}>{loading && <Spinner />}{loading ? 'ഇല്ലാതാക്കുന്നു…' : 'ഇല്ലാതാക്കുക'}</button>;
+  }}>{loading ? <LoaderCircle aria-hidden="true" className="animate-spin" size={19} /> : <Trash2 aria-hidden="true" size={19} strokeWidth={2} />}</button>;
 }
